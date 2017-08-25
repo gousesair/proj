@@ -12,7 +12,7 @@ class plagarism():
         This function is used for replacing
         the special characters in the string
         """
-        return re.sub('[^A-Za-z0-9\_]+', ' ',t)
+        return re.sub('[^A-Za-z0-9\_\n]+', ' ',t)
 
     def frequency(self,d,dict1):
         """
@@ -64,10 +64,8 @@ class plagarism():
             y=[]
             t1=file1.read()
             t1=t1.lower()
-            #t1.replace("\n"," ")
             t1=self.rep(t1)
             t1=t1.split(" ")
-            #t1=[z.strip(string.punctuation) for z in t1]
             dict1={}
             dict1=self.frequency(t1,dict1)
             s1=self.modfreq(dict1)
@@ -84,8 +82,14 @@ class plagarism():
                     dict2=self.frequency(t2,dict2)
                     freq=self.dotp(dict1,dict2)
                     s2=self.modfreq(dict2)
-                    tsum=s1*s2
-                    y.append(str(round((freq/tsum)*100))+"%")
+                    try:
+                        if s1*s2==0:
+                            raise Exception
+                        else:
+                            tsum=s1*s2
+                            y.append(str(round((freq/tsum)*100))+"%")
+                    except Exception:
+                        y.append("Empty")
                     file2.close()
             print(k,y)
             print("\n")
