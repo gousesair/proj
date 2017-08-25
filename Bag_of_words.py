@@ -87,7 +87,7 @@ class plagarism():
                             raise Exception
                         else:
                             tsum=s1*s2
-                            y.append(str(round((freq/tsum)*100))+"%")
+                            y.append(str(round(((freq/tsum)*100),2))+"%")
                     except Exception:
                         y.append("Empty")
                     file2.close()
